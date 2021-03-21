@@ -1,8 +1,9 @@
 package com.xiaoxiaoning.demo.controller;
 
 import com.xiaoxiaoning.demo.Service.EbookService;
-import com.xiaoxiaoning.demo.domain.Ebook;
+import com.xiaoxiaoning.demo.request.EbookReq;
 import com.xiaoxiaoning.demo.response.CommonResp;
+import com.xiaoxiaoning.demo.response.EbookResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +25,11 @@ public class EbookController {
 
 
   @GetMapping("/list")
-  public CommonResp list(){
-    List<Ebook> list =  ebookService.list();
-    CommonResp<List<Ebook>> resp = new CommonResp<>();
+  //将传递进来的参数映射为一个EbookReq，SpringBoot会自动解析封装在EbookReq中的属性
+  public CommonResp list(EbookReq req){
+    //将req传入到Service层的list方法中
+    List<EbookResp> list =  ebookService.list(req);
+    CommonResp<List<EbookResp>> resp = new CommonResp<>();
     resp.setContent(list);
     return resp;
   }

@@ -1,6 +1,8 @@
 package com.xiaoxiaoning.demo.response;
 
 
+import java.util.List;
+
 //后端返回给前端的通用类
 public class CommonResp<T> {
 
@@ -13,6 +15,8 @@ public class CommonResp<T> {
      * 返回信息
      */
     private String message;
+
+
 
     /**
      * 返回泛型数据，自定义类型
@@ -39,8 +43,8 @@ public class CommonResp<T> {
         return content;
     }
 
-    public void setContent(T content) {
-        this.content = content;
+    public void setContent(List<EbookResp> content) {
+        this.content = (T) content;
     }
 
     @Override
