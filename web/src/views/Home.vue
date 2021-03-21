@@ -1,13 +1,8 @@
 <template>
-<!--  <div class="home">-->
-<!--    <img alt="Vue logo" src="../assets/logo.png">-->
-<!--    <a-button type="primary">Primary</a-button>-->
-<!--    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>-->
-<!--  </div>-->
 
   <a-layout-content style="padding: 0 50px">
     <a-layout style="padding: 24px 0; background: #fff">
-      <a-layout-sider width="200" style="background: #fff">
+      <a-layout-sider width="200" style="background: #ffffff">
         <a-menu
             mode="inline"
             v-model:selectedKeys="selectedKeys2"
