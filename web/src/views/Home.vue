@@ -117,9 +117,8 @@ export default defineComponent({
       { type: 'LikeOutlined', text: '156' },
       { type: 'MessageOutlined', text: '2' },
     ];
-    console.log("setup");
     onMounted(() =>{
-      axios.get(process.env.VUE_APP_SERVER+"/ebook/list").then((res) =>{
+      axios.get("/ebook/list").then((res) =>{
         const data = res.data;
         ebook.value = data.content;
         // ebook1.book = data.content;
