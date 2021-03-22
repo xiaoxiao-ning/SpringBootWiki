@@ -46,35 +46,21 @@
         </a-menu>
       </a-layout-sider>
       <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-        <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
-          <template #footer>
-            <div>
-              <b>ant design vue</b>
-              footer part
-            </div>
-          </template>
+        <a-list item-layout="vertical" size="large" :data-source="ebook" :grid="{ gutter: 20, column: 4 }">
           <template #renderItem="{ item }">
-            <a-list-item key="item.title">
+            <a-list-item key="item.name">
               <template #actions>
           <span v-for="{ type, text } in actions" :key="type">
             <component v-bind:is="type" style="margin-right: 8px" />
             {{ text }}
           </span>
               </template>
-              <template #extra>
-                <img
-                    width="272"
-                    alt="logo"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                />
-              </template>
               <a-list-item-meta :description="item.description">
                 <template #title>
-                  <a :href="item.href">{{ item.title }}</a>
+                  <a :href="item.href">{{ item.name }}</a>
                 </template>
-                <template #avatar><a-avatar :src="item.avatar" /></template>
+                <template #avatar><a-avatar :src="item.cover" /></template>
               </a-list-item-meta>
-              {{ item.content }}
             </a-list-item>
           </template>
         </a-list>
@@ -116,7 +102,7 @@ export default defineComponent({
     //使用ref的话,先要调用ref函数来声明他是一个动态的变量
     const ebook = ref();
     //使用reactive的话，则是要使用reactive函数创建一个空的对象，里面声明属性，来接受参数
-    const ebook1 = reactive({book:[]});
+    // const ebook1 = reactive({book:[]});
 
 
     const pagination = {
@@ -136,13 +122,13 @@ export default defineComponent({
       axios.get("http://localhost:8080/ebook/list?name=Spring").then((res) =>{
         const data = res.data;
         ebook.value = data.content;
-        ebook1.book = data.content;
+        // ebook1.book = data.content;
 
       })
     })
     return {
       ebook,
-      ebook1:toRef(ebook1 , "book"),
+      // ebook1:toRef(ebook1 , "book"),
       listData,
       pagination,
       actions
