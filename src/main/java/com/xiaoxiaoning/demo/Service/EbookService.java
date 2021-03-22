@@ -1,5 +1,6 @@
 package com.xiaoxiaoning.demo.Service;
 
+import com.sun.deploy.util.StringUtils;
 import com.xiaoxiaoning.demo.domain.Ebook;
 import com.xiaoxiaoning.demo.domain.EbookExample;
 import com.xiaoxiaoning.demo.mapper.EbookMapper;
@@ -8,6 +9,7 @@ import com.xiaoxiaoning.demo.response.EbookResp;
 import com.xiaoxiaoning.demo.utils.CopyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -28,7 +30,11 @@ public class EbookService {
     EbookExample ebookExample = new EbookExample();
     EbookExample.Criteria criteria = ebookExample.createCriteria();
     //这里就可以调用req中的get方法，来获取到你想要的参数，来进行sql查询
-    criteria.andNameLike("%" + req.getName() + "%");
+    //使用动态sql
+    if(!(ObjectUtils.isEmpty(req.getName()))){
+      criteria.andNameLike("%" + req.getName() + "%");
+    }
+
     //创建一个ebookList
     List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 //    List<EbookResp> respList =  new ArrayList<>();
