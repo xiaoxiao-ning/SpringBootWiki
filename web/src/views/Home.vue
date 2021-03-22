@@ -5,8 +5,6 @@
       <a-layout-sider width="200" style="background: #ffffff">
         <a-menu
             mode="inline"
-            v-model:selectedKeys="selectedKeys2"
-            v-model:openKeys="openKeys"
             style="height: 100%"
         >
           <a-sub-menu key="sub1">
@@ -48,16 +46,40 @@
         </a-menu>
       </a-layout-sider>
       <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-        Content
+        {{ebook}}
+        <br>
+        {{ebook1}}
       </a-layout-content>
     </a-layout>
   </a-layout-content>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+//要使用vue的生命周期函数,必须要导入
+import { defineComponent , onMounted , ref , toRef , reactive } from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
-  name: 'Home'
+  name: 'Home',
+  setup(){
+    //使用ref的话,先要调用ref函数来声明他是一个动态的变量
+    const ebook = ref();
+    //使用reactive的话，则是要使用reactive函数创建一个空的对象，里面声明属性，来接受参数
+    const ebook1 = reactive({book:[]})
+    console.log("setup");
+    onMounted(() =>{
+      axios.get("http://localhost:8080/ebook/list?name=Spring").then((res) =>{
+        const data = res.data;
+        ebook.value = data.content;
+        ebook1.book = data.content;
+
+      })
+    })
+    return {
+      ebook,
+      ebook1:toRef(ebook1 , "book")
+    }
+
+  }
 });
 </script>
