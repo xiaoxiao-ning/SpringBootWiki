@@ -32,31 +32,31 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar" />
         </template>
-        <template v-slot:category="{ text, record }">
-          <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
-        </template>
-        <template v-slot:action="{ text, record }">
-          <a-space size="small">
-            <router-link :to="'/admin/doc?ebookId=' + record.id">
-              <a-button type="primary">
-                文档管理
-              </a-button>
-            </router-link>
-            <a-button type="primary" @click="edit(record)">
-              编辑
-            </a-button>
-            <a-popconfirm
-                title="删除后不可恢复，确认删除?"
-                ok-text="是"
-                cancel-text="否"
-                @confirm="handleDelete(record.id)"
-            >
-              <a-button type="danger">
-                删除
-              </a-button>
-            </a-popconfirm>
-          </a-space>
-        </template>
+<!--        <template v-slot:category="{ text, record }">-->
+<!--          <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>-->
+<!--        </template>-->
+<!--        <template v-slot:action="{ text, record }">-->
+<!--          <a-space size="small">-->
+<!--            <router-link :to="'/admin/doc?ebookId=' + record.id">-->
+<!--              <a-button type="primary">-->
+<!--                文档管理-->
+<!--              </a-button>-->
+<!--            </router-link>-->
+<!--            <a-button type="primary" @click="edit(record)">-->
+<!--              编辑-->
+<!--            </a-button>-->
+<!--            <a-popconfirm-->
+<!--                title="删除后不可恢复，确认删除?"-->
+<!--                ok-text="是"-->
+<!--                cancel-text="否"-->
+<!--                @confirm="handleDelete(record.id)"-->
+<!--            >-->
+<!--              <a-button type="danger">-->
+<!--                删除-->
+<!--              </a-button>-->
+<!--            </a-popconfirm>-->
+<!--          </a-space>-->
+<!--        </template>-->
       </a-table>
     </a-layout-content>
   </a-layout>
@@ -161,8 +161,10 @@ export default defineComponent({
       }).then((response) => {
         loading.value = false;
         const data = response.data;
+        console.log(data);
         if (data.success) {
-          ebooks.value = data.content.list;
+          ebooks.value = data.content.respList;
+          console.log(ebooks.value)
 
           // 重置分页按钮
           pagination.value.current = params.page;
@@ -287,7 +289,10 @@ export default defineComponent({
     // };
 
     onMounted(() => {
-      handleQuery({});
+      handleQuery({
+        page:1,
+        size:pagination.value.pageSize
+      });
     });
 
     return {
