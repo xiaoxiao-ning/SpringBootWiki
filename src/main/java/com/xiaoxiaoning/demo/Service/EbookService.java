@@ -1,19 +1,20 @@
 package com.xiaoxiaoning.demo.Service;
 
-import com.sun.deploy.util.StringUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiaoxiaoning.demo.domain.Ebook;
 import com.xiaoxiaoning.demo.domain.EbookExample;
 import com.xiaoxiaoning.demo.mapper.EbookMapper;
 import com.xiaoxiaoning.demo.request.EbookReq;
 import com.xiaoxiaoning.demo.response.EbookResp;
+import com.xiaoxiaoning.demo.response.PageResp;
 import com.xiaoxiaoning.demo.utils.CopyUtils;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by xiaoxiaoning on 2021/3/21 9:08 上午
@@ -25,7 +26,11 @@ public class EbookService {
 
 
 
-  public List<EbookResp> list(EbookReq req) {
+
+  public PageResp<EbookResp> list(EbookReq req) {
+
+    //只需要在java包相应的service类下引入PageHelper类即可
+    PageHelper.startPage(req.getPage(), req.getSize());
     //这些EbookExample到底是干嘛用的?????以及criteria这个类是干嘛用的
     EbookExample ebookExample = new EbookExample();
     EbookExample.Criteria criteria = ebookExample.createCriteria();
@@ -48,7 +53,13 @@ public class EbookService {
 
     //列表复制
     List<EbookResp> respList = CopyUtils.copyList(ebookList, EbookResp.class);
-    return respList;
+
+    PageResp<EbookResp> pageResp = new PageResp<>();
+//    pageResp.setTotal(PageInfo.getTotal());
+    pageResp.setRespList(respList);
+
+    return pageResp;
+
   }
 
 
