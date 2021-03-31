@@ -43,7 +43,7 @@ public class CommonResp<T> {
         return content;
     }
 
-    public void setContent(List<EbookResp> content) {
+    public void setContent(PageResp<EbookResp> content) {
         this.content = (T) content;
     }
 

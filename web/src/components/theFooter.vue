@@ -1,6 +1,6 @@
 <template>
   <a-layout-footer style="text-align: center">
-    小小宁的Wiki项目aaaaa
+    小小宁的Wiki项目
   </a-layout-footer>
 </template>
 

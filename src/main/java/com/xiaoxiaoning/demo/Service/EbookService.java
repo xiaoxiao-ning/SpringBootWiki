@@ -1,11 +1,14 @@
 package com.xiaoxiaoning.demo.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sun.deploy.util.StringUtils;
 import com.xiaoxiaoning.demo.domain.Ebook;
 import com.xiaoxiaoning.demo.domain.EbookExample;
 import com.xiaoxiaoning.demo.mapper.EbookMapper;
 import com.xiaoxiaoning.demo.request.EbookReq;
 import com.xiaoxiaoning.demo.response.EbookResp;
+import com.xiaoxiaoning.demo.response.PageResp;
 import com.xiaoxiaoning.demo.utils.CopyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -25,7 +28,8 @@ public class EbookService {
 
 
 
-  public List<EbookResp> list(EbookReq req) {
+  public PageResp<EbookResp> list(EbookReq req) {
+
     //这些EbookExample到底是干嘛用的?????以及criteria这个类是干嘛用的
     EbookExample ebookExample = new EbookExample();
     EbookExample.Criteria criteria = ebookExample.createCriteria();
@@ -36,7 +40,13 @@ public class EbookService {
     }
 
     //创建一个ebookList
+    PageHelper.startPage(req.getPage() , req.getSize());
+
     List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
+    //先创建PageInfo实例
+    PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
+    pageInfo.getTotal();
+    pageInfo.getPages();
 //    List<EbookResp> respList =  new ArrayList<>();
 //    for (Ebook ebook : ebookList) {
 //
@@ -48,7 +58,10 @@ public class EbookService {
 
     //列表复制
     List<EbookResp> respList = CopyUtils.copyList(ebookList, EbookResp.class);
-    return respList;
+    PageResp<EbookResp> pageResp = new PageResp<>();
+    pageResp.setTotal(pageInfo.getTotal());
+    pageResp.setRespList(respList);
+    return pageResp;
   }
 
 
