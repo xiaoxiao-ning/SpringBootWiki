@@ -87,16 +87,26 @@ export default defineComponent({
      * 数据查询
      **/
     const handleQuery = (params: any) => {
+      console.log(params);
+      console.log(params.page + " " + params.size);
+
       loading.value = true;
       //调用axios方法，去请求后端的接口
-      axios.get("/ebook/list", params).then((response) => {
+      axios.get("/ebook/list", {
+        params: {
+          //将参数展开,需要传几个参数，则用几个参数,减少性能消耗
+          page: params.page,
+          size: params.size
+        }
+      }).then((response) => {
         //请求成功之后,将响应的data赋值给data，ebooks的value为data的content
         loading.value = false;
         const data = response.data;
-        ebooks.value = data.content;
+        ebooks.value = data.content.respList;
 
         // 重置分页按钮
         pagination.value.current = params.page;
+        pagination.value.total = data.content.page;
       });
     };
 
@@ -106,13 +116,16 @@ export default defineComponent({
     const handleTableChange = (pagination: any) => {
       console.log("看看自带的分页参数都有啥："+ pagination);
       handleQuery({
-        page: pagination.current,
+        page: 1,
         size: pagination.pageSize
       });
     };
 
     onMounted(() => {
-      handleQuery({});
+      handleQuery({
+        page: 1,
+        size: pagination.value.pageSize
+      });
     });
 
     return {
