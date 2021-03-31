@@ -9,14 +9,17 @@
       <a-menu-item key="Home">
         <router-link to="/">首页</router-link>
       </a-menu-item>
-      <a-menu-item key="AdminEbook">
-
-        <router-link to="/About">关于我们</router-link>
+      <a-menu-item key="/Admin/Ebook">
+        <router-link to="/Admin/Ebook">
+              电子书管理
+        </router-link>
       </a-menu-item>
-      <a-menu-item key="About">
+      <a-menu-item key="/about">
+          <router-link to="/about">
+              关于我们
+          </router-link>
 
-        <router-link to="/admin/Admin-Ebook">电子书管理</router-link>
-        </a-menu-item>
+      </a-menu-item>
     </a-menu>
   </a-layout-header>
 </template>

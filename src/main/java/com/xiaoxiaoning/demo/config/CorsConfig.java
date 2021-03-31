@@ -5,8 +5,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
-//通过这个类，来解决前端请求跨域的问题
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 

@@ -1,8 +1,7 @@
 <template>
   <a-layout>
    <the-header></the-header>
-<!--    <Home></Home>-->
-    <router-view to="/Home" ></router-view>
+    <router-view/>
     <the-footer></the-footer>
   </a-layout>
 </template>
@@ -11,14 +10,12 @@
 import { defineComponent } from 'vue';
 import theHeader from "@/components/theHeader.vue";
 import theFooter from "@/components/theFooter.vue";
-import Home  from "@/views/Home.vue";
 
 export default defineComponent({
   name:"App",
   components:{
     theHeader,
-    theFooter,
-    Home
+    theFooter
   }
 })
 
